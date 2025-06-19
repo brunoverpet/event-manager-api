@@ -5,7 +5,8 @@ import User from '#models/user'
 export default class AuthController {
   async register({ request, response }: HttpContext) {
     const user = await request.validateUsing(registerValidation)
-    if (user.email)
+    const searchUser = await User.findBy({ email: user.email })
+    if (searchUser)
       return response.status(400).json({ message: 'Ce mail est déjà associé à un compte.' })
     await User.create(user)
     return response.status(201).json({ message: 'Votre compte a bien été créer.' })
