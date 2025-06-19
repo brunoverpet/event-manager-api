@@ -28,5 +28,6 @@ router
   .group(() => {
     router.get('/me', [UsersController, 'me'])
     router.put('/edit', [UsersController, 'edit'])
+    router.delete('/delete', [UsersController, 'delete'])
   })
   .use(middleware.auth())

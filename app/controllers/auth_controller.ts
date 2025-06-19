@@ -12,6 +12,12 @@ export default class AuthController {
   async login({ auth, request, response }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
     const user = await User.verifyCredentials(email, password)
+
+    if (user.isDeleted)
+      return response
+        .status(403)
+        .json({ message: 'Ce compte a été supprimé et vous ne pouvez donc plus vous y connecter.' })
+
     await auth.use().login(user)
 
     response.redirect('/')

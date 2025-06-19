@@ -19,4 +19,12 @@ export default class UsersController {
     await user.save()
     return response.status(200).json({ message: 'Vos informations ont bien été enregistré.' })
   }
+
+  async delete({ auth, response }: HttpContext) {
+    const user: User = auth.getUserOrFail()
+    user.isDeleted = true
+    await user.save()
+
+    return response.status(200).json({ message: 'Votre compte a bien été supprimé.' })
+  }
 }
