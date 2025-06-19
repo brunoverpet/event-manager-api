@@ -8,4 +8,12 @@ export default class AuthController {
     await User.create(user)
     return response.status(201).json({ message: 'Votre compte a bien été créer.' })
   }
+
+  async login({ auth, request, response }: HttpContext) {
+    const { email, password } = request.only(['email', 'password'])
+    const user = await User.verifyCredentials(email, password)
+    await auth.use().login(user)
+
+    response.redirect('/')
+  }
 }
