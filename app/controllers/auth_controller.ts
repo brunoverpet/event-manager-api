@@ -23,6 +23,6 @@ export default class AuthController {
 
     await auth.use().login(user)
 
-    response.redirect('/')
+    response.redirect('/events')
   }
 }

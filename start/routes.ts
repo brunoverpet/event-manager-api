@@ -9,20 +9,13 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
-
-const EventsController = () => import('#controllers/events_controller')
+const EventRegistrationsController = () => import('#controllers/event_registrations_controller')
 
 const AuthController = () => import('#controllers/auth_controller')
 const UsersController = () => import('#controllers/users_controller')
+const EventsController = () => import('#controllers/events_controller')
 
-router
-  .get('/', async () => {
-    return {
-      hello: 'brubo',
-    }
-  })
-  .use(middleware.auth())
-
+// Authentication Routes
 router.post('/register', [AuthController, 'register'])
 router.post('/login', [AuthController, 'login'])
 
@@ -39,5 +32,8 @@ router
     router.get('/events/:id', [EventsController, 'getEventById'])
     router.put('/events/:id', [EventsController, 'update'])
     router.delete('/events/:id', [EventsController, 'delete'])
+
+    // Events Registration Routes
+    router.post('/events/:id/register', [EventRegistrationsController, 'register'])
   })
   .use(middleware.auth())
