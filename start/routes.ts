@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+
 const EventsController = () => import('#controllers/events_controller')
 
 const AuthController = () => import('#controllers/auth_controller')
@@ -34,5 +35,6 @@ router
 
     // Events Routes
     router.post('/event', [EventsController, 'create'])
+    router.get('/events', [EventsController, 'getEvents'])
   })
   .use(middleware.auth())

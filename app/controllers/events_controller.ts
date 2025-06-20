@@ -9,4 +9,11 @@ export default class EventsController {
 
     return response.status(201).json({ message: `L'évènement à bien été créer` })
   }
+
+  async getEvents({ response }: HttpContext) {
+    const events = await Event.all()
+    if (events.length === 0)
+      return response.status(404).json({ message: "Aucun événement n'est actuellement disponible" })
+    return response.status(200).json({ events })
+  }
 }
