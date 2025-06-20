@@ -48,4 +48,23 @@ export default class EventsController {
 
     return response.status(200).json({ message: "L'évènement a bien été modifié", event })
   }
+
+  async delete({ auth, request, response }: HttpContext) {
+    const id = request.param('id')
+    const event = await Event.find(id)
+    const userId = auth.getUserOrFail().id
+
+    if (!event)
+      return response
+        .status(404)
+        .json({ message: "Cet évènement n'est actuellement pas disponible ou n'existe pas." })
+
+    if (event?.authorId !== userId)
+      return response
+        .status(401)
+        .json({ message: "Vous n'avez pas les droits de réaliser cette action." })
+
+    await event.delete()
+    return response.status(200).json({ message: "L'événement a bien été supprimé." })
+  }
 }

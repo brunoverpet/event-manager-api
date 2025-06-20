@@ -38,5 +38,6 @@ router
     router.get('/events', [EventsController, 'getEvents'])
     router.get('/events/:id', [EventsController, 'getEventById'])
     router.put('/events/:id', [EventsController, 'update'])
+    router.delete('/events/:id', [EventsController, 'delete'])
   })
   .use(middleware.auth())
