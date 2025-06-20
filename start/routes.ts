@@ -36,5 +36,6 @@ router
     // Events Routes
     router.post('/event', [EventsController, 'create'])
     router.get('/events', [EventsController, 'getEvents'])
+    router.get('/events/:id', [EventsController, 'getEventById'])
   })
   .use(middleware.auth())

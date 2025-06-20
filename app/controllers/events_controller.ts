@@ -16,4 +16,16 @@ export default class EventsController {
       return response.status(404).json({ message: "Aucun événement n'est actuellement disponible" })
     return response.status(200).json({ events })
   }
+
+  async getEventById({ request, response }: HttpContext) {
+    const id = request.param('id')
+    const event = await Event.find(id)
+
+    if (!event)
+      return response
+        .status(404)
+        .json({ message: "Cet évènement n'est actuellement pas disponible ou n'existe pas." })
+
+    return response.status(200).json({ event })
+  }
 }
