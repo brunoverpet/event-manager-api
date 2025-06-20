@@ -5,6 +5,7 @@ import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import Event from '#models/event'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
+import EventsRegistration from '#models/events_registration'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -38,4 +39,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => Event)
   declare posts: HasMany<typeof Event>
+
+  @hasMany(() => EventsRegistration)
+  declare registrations: HasMany<typeof EventsRegistration>
 }
