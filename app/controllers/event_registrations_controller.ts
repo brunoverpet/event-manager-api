@@ -38,4 +38,25 @@ export default class EventRegistrationsController {
     await EventsRegistration.create({ eventId, userId })
     return response.status(201).json({ message: 'Vous avez bien été inscrit à cet événement.' })
   }
+
+  async unsubscribe({ auth, request, response }: HttpContext) {
+    const eventId = request.param('id')
+    const userId = auth.getUserOrFail().id
+    const event = await Event.find(eventId)
+    if (!event)
+      return response
+        .status(404)
+        .json({ message: "Cet évènement n'est actuellement pas disponible ou n'existe pas." })
+
+    const findIfRegister = await EventsRegistration.query()
+      .where('event_id', eventId)
+      .andWhere('user_id', userId)
+      .first()
+
+    if (!findIfRegister)
+      return response.status(409).json({ message: "Vous n'êtes pas inscrit à cet événement." })
+
+    await findIfRegister.delete()
+    return response.status(200).json({ message: "Vous avez été désinscrit de l'événement." })
+  }
 }
