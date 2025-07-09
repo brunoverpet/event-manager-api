@@ -1,5 +1,3 @@
-# event-manager-api
-
 # 🎫 Event Manager API – AdonisJS
 
 Une API complète pour gérer des événements, avec authentification, gestion des utilisateurs, inscriptions.
